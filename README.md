@@ -17,3 +17,20 @@ REST Template blocking that means it waits for the service to responding. This c
 
 DTO(Data transfer Object) Pattern-
 Design pattern used to transfer data between applications.
+
+Service Registry- Service registry in ms architecture is used to enable dynamic service discovery.
+It is a kind of centralized server where every microservice register themself and whenever you need to communicate to other microservice, you do a service discovery request and then you communicate. You don't need to hardcode urls in microservices.
+
+Benifits-
+1. Dynamic service discovery.
+2. Load Balancing.
+3. Fault tolerance and Resilience.
+4. Scalability and Elasticity.
+5. Service monitoring and Health check.
+
+Spring Cloud Netflix-
+With a few simple annotations, you can quickly enable and configure the common patterns inside your application and build large distributed systems with battle-tested Netflix components. The patterns provided include Service Discovery (Eureka).
+
+To create service registry, goto start.spring.io and generate a project by adding web and Eureka Server dependency.
+Add @EnableEurekaServer annotation for application main class.
+
