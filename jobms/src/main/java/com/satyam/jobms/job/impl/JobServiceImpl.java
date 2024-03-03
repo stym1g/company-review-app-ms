@@ -3,7 +3,9 @@ package com.satyam.jobms.job.impl;
 import com.satyam.jobms.job.Job;
 import com.satyam.jobms.job.JobRepository;
 import com.satyam.jobms.job.JobService;
+import com.satyam.jobms.job.external.Company;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 import java.util.Optional;
@@ -20,6 +22,9 @@ public class JobServiceImpl implements JobService {
     private Long id = 1L;
     @Override
     public List<Job> findAll() {
+        RestTemplate restTemplate = new RestTemplate();
+        Company company = restTemplate.getForObject("localhost:8082/companies/1", Company.class);
+        System.out.println("Company name: " + company.getName());
         return jobRepository.findAll();
     }
     @Override
