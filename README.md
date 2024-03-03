@@ -15,4 +15,5 @@ Advantages-
 5. Integration
 REST Template blocking that means it waits for the service to responding. This could be disadvantage in case you want non-blocking.
 
-
+DTO(Data transfer Object) Pattern-
+Design pattern used to transfer data between applications.

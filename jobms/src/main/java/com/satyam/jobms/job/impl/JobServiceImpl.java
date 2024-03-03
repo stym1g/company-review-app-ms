@@ -3,12 +3,15 @@ package com.satyam.jobms.job.impl;
 import com.satyam.jobms.job.Job;
 import com.satyam.jobms.job.JobRepository;
 import com.satyam.jobms.job.JobService;
+import com.satyam.jobms.job.dto.JobWithCompanyDTO;
 import com.satyam.jobms.job.external.Company;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class JobServiceImpl implements JobService {
@@ -21,20 +24,13 @@ public class JobServiceImpl implements JobService {
 
     private Long id = 1L;
     @Override
-    public List<Job> findAll() {
-        RestTemplate restTemplate = new RestTemplate();
-        Company company = restTemplate.getForObject("localhost:8082/companies/1", Company.class);
-        System.out.println("Company name: " + company.getName());
-        return jobRepository.findAll();
+    public List<JobWithCompanyDTO> findAll() {
+        List<Job> jobs = jobRepository.findAll();
+        return jobs.stream().map(this::convertToDTO).collect(Collectors.toList());
     }
     @Override
-    public Job findOne(Long id) {
-//        for(Job j: jobs){
-//            if(Objects.equals(j.getId(), id)){
-//                return j;
-//            }
-//        }
-        return jobRepository.findById(id).orElse(null);
+    public JobWithCompanyDTO findOne(Long id) {
+        return convertToDTO(jobRepository.findById(id).orElse(null));
     }
     @Override
     public void createJob(Job job) {
@@ -78,5 +74,13 @@ public class JobServiceImpl implements JobService {
             return true;
         }
         return false;
+    }
+    private JobWithCompanyDTO convertToDTO(Job job){
+        JobWithCompanyDTO jobWithCompanyDTO = new JobWithCompanyDTO();
+        jobWithCompanyDTO.setJob(job);
+        RestTemplate restTemplate = new RestTemplate();
+        Company company = restTemplate.getForObject("http://localhost:8081/companies/" + job.getCompanyId(), Company.class);
+        jobWithCompanyDTO.setCompany(company);
+        return jobWithCompanyDTO;
     }
 }
