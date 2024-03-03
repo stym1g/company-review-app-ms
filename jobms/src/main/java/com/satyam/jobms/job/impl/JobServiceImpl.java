@@ -5,6 +5,7 @@ import com.satyam.jobms.job.JobRepository;
 import com.satyam.jobms.job.JobService;
 import com.satyam.jobms.job.dto.JobWithCompanyDTO;
 import com.satyam.jobms.job.external.Company;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -17,6 +18,9 @@ import java.util.stream.Collectors;
 public class JobServiceImpl implements JobService {
     //private final List<Job> jobs = new ArrayList<>();
     JobRepository jobRepository;
+
+    @Autowired
+    RestTemplate restTemplate;
 
     public JobServiceImpl(JobRepository jobRepository) {
         this.jobRepository = jobRepository;
@@ -76,10 +80,12 @@ public class JobServiceImpl implements JobService {
         return false;
     }
     private JobWithCompanyDTO convertToDTO(Job job){
+        if(job == null){
+            return null;
+        }
         JobWithCompanyDTO jobWithCompanyDTO = new JobWithCompanyDTO();
         jobWithCompanyDTO.setJob(job);
-        RestTemplate restTemplate = new RestTemplate();
-        Company company = restTemplate.getForObject("http://localhost:8081/companies/" + job.getCompanyId(), Company.class);
+        Company company = restTemplate.getForObject("http://COMPANY-SERVICE:8081/companies/" + job.getCompanyId(), Company.class);
         jobWithCompanyDTO.setCompany(company);
         return jobWithCompanyDTO;
     }
