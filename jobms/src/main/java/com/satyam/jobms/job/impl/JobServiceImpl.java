@@ -3,6 +3,8 @@ package com.satyam.jobms.job.impl;
 import com.satyam.jobms.job.Job;
 import com.satyam.jobms.job.JobRepository;
 import com.satyam.jobms.job.JobService;
+import com.satyam.jobms.job.clients.CompanyClient;
+import com.satyam.jobms.job.clients.ReviewClient;
 import com.satyam.jobms.job.dto.JobDTO;
 import com.satyam.jobms.job.external.Company;
 import com.satyam.jobms.job.external.Review;
@@ -25,9 +27,13 @@ public class JobServiceImpl implements JobService {
 
     @Autowired
     RestTemplate restTemplate;
+    private CompanyClient companyClient;
+    private ReviewClient reviewClient;
 
-    public JobServiceImpl(JobRepository jobRepository) {
+    public JobServiceImpl(JobRepository jobRepository, CompanyClient companyClient, ReviewClient reviewClient) {
         this.jobRepository = jobRepository;
+        this.companyClient = companyClient;
+        this.reviewClient = reviewClient;
     }
 
     private Long id = 1L;
@@ -87,13 +93,8 @@ public class JobServiceImpl implements JobService {
         if(job == null){
             return null;
         }
-        Company company = restTemplate.getForObject("http://COMPANY-SERVICE:8081/companies/" + job.getCompanyId(), Company.class);
-        ResponseEntity<List<Review>> reviewResponse = restTemplate.exchange(
-                "http://REVIEW-SERVICE:8083/reviews?companyId=" + job.getCompanyId(),
-                HttpMethod.GET,
-                null,
-                new ParameterizedTypeReference<List<Review>>(){});
-        List<Review> reviews = reviewResponse.getBody();
+        Company company = companyClient.getCompany(job.getCompanyId());
+        List<Review> reviews = reviewClient.getReviews(job.getCompanyId());
         JobDTO jobDTO = JobMapper.mapToJobWithCompanyDTO(job, company, reviews);
         // jobDTO.setCompany(company);
         return jobDTO;
