@@ -63,5 +63,23 @@ Now, we can check config added in git repo with this url- http://192.168.222.190
 
 Mark the config server as optional to avoid failure if config server is down.
 
+API Gateway
+A special type of reverse proxy or something that routes the requests from the client application to the appropriate microservice
+and acts as a single entry point for the external client requests.
+Advantages
+Encapsulate internal system architecture.
+Handle security, load balancing, rate limit and analytics.
+Can authenticate incoming requests and pass only valid requests to the services.
+Can aggregate responses from different microservices.
+
+API Gateway functions-
+Request routing,
+Load balancing,
+Authentication and authorization,
+Rate limiting,
+Request and response transformation,
+Aggregate data from multiple services.
+
+
 
 
