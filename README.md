@@ -34,3 +34,17 @@ With a few simple annotations, you can quickly enable and configure the common p
 To create service registry, goto start.spring.io and generate a project by adding web and Eureka Server dependency.
 Add @EnableEurekaServer annotation for application main class.
 
+Eureka server url- localhost:8761
+
+micrometer- for tracing microservices
+Zipking- checing traces and spans on ui
+Zipkin url- localhost:9411
+
+Best practices
+Use consistent naming convention
+Secure your zepkin server
+districuted tracing comes with some performance impact
+
+
+
+
