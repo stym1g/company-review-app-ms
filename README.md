@@ -45,6 +45,18 @@ Use consistent naming convention
 Secure your zepkin server
 districuted tracing comes with some performance impact
 
+Configuration management
+As number of configurations increases, managing individual configuration may become a complex task.
+A centralized config server provides a central place for managing configurations across microservicesd.
+
+Spring Cloud config server- part of Spring Cloud project, a suit of tools specially designed for building and managing cloud-native application.
+Storing configurations
+Serving configurations
+Refreshing configurations
+Easy integration with springboot
+Support for different environments
+Encryption Decryption
+
 
 
 
