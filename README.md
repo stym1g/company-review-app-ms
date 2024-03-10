@@ -57,6 +57,11 @@ Easy integration with springboot
 Support for different environments
 Encryption Decryption
 
+Create a git repo with application.properties file and add config there.
+In config-server service add git repo uri to application.properties under spring.cloud.config.server.git.uri tag
+Now, we can check config added in git repo with this url- http://192.168.222.190:8080/application/dev
+
+Mark the config server as optional to avoid failure if config server is down.
 
 
 
