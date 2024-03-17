@@ -1,3 +1,10 @@
+Database running on port(tcp)- 5432
+pgadmin url- localhost:8888
+Zipkin running on localhost:9411
+
+containers in use for this service
+postgres, dpage/pgadmin4, openzipkin/zipkin 
+
 Now we have 3 microservices running independently.
 We there is a need to communicate these services to each other.
 Two ways to implement communication between services i.e. inter-service communication-
@@ -37,13 +44,13 @@ Add @EnableEurekaServer annotation for application main class.
 Eureka server url- localhost:8761
 
 micrometer- for tracing microservices
-Zipking- checing traces and spans on ui
+Zipkin- checking traces and spans on ui
 Zipkin url- localhost:9411
 
 Best practices
 Use consistent naming convention
-Secure your zepkin server
-districuted tracing comes with some performance impact
+Secure your zipkin server
+distributed tracing comes with some performance impact
 
 Configuration management
 As number of configurations increases, managing individual configuration may become a complex task.
@@ -79,6 +86,36 @@ Authentication and authorization,
 Rate limiting,
 Request and response transformation,
 Aggregate data from multiple services.
+
+
+Need of Fault tolerance
+Ability to continue operating without any interruption
+Fault isolation
+network latency
+deployment issues
+increased complexity
+elasticity
+Tolerating external failure
+
+
+Resilience is ability or capacity to recover quickly from difficulties.
+Techniques
+1. Retries
+2. Rate limiting
+3. Bulkheads
+4. Circuit breakers
+5. Fallbacks
+6. Timeouts
+7. Graceful degradation
+
+We can use Resilience4J library to implement some of these features
+It is lightweight and easy to use library which is build for functional programing paradigm.
+It has below some of main modules:
+1. Retry module
+2. Rate Limiter
+3. Bulkhead
+4. Circuit breaker
+
 
 
 

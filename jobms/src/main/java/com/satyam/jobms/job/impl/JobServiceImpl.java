@@ -25,7 +25,7 @@ public class JobServiceImpl implements JobService {
     //private final List<Job> jobs = new ArrayList<>();
     JobRepository jobRepository;
 
-    @Autowired
+    //@Autowired
     RestTemplate restTemplate;
     private final CompanyClient companyClient;
     private final ReviewClient reviewClient;
@@ -93,8 +93,16 @@ public class JobServiceImpl implements JobService {
         if(job == null){
             return null;
         }
-        Company company = companyClient.getCompany(job.getCompanyId());
-        List<Review> reviews = reviewClient.getReviews(job.getCompanyId());
+        restTemplate = new RestTemplate();
+        Company company = restTemplate.getForObject("http://localhost:8081/companies/" + job.getCompanyId(), Company.class);
+        // Company company = companyClient.getCompany(job.getCompanyId());
+        ResponseEntity<List<Review>> reviewResponse = restTemplate.exchange(
+                "http://localhost:8083/reviews?companyId=" + job.getCompanyId(),
+                HttpMethod.GET,
+                null,
+                new ParameterizedTypeReference<List<Review>>(){});
+        List<Review> reviews = reviewResponse.getBody();
+        // List<Review> reviews = reviewClient.getReviews(job.getCompanyId());
         // jobDTO.setCompany(company);
         return JobMapper.mapToJobWithCompanyDTO(job, company, reviews);
     }
