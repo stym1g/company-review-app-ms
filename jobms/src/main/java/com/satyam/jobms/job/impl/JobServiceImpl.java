@@ -9,6 +9,7 @@ import com.satyam.jobms.job.dto.JobDTO;
 import com.satyam.jobms.job.external.Company;
 import com.satyam.jobms.job.external.Review;
 import com.satyam.jobms.job.mapper.JobMapper;
+import io.github.resilience4j.retry.annotation.Retry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
@@ -16,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -30,6 +32,8 @@ public class JobServiceImpl implements JobService {
     private final CompanyClient companyClient;
     private final ReviewClient reviewClient;
 
+    int attempt = 0;
+
     public JobServiceImpl(JobRepository jobRepository, CompanyClient companyClient, ReviewClient reviewClient) {
         this.jobRepository = jobRepository;
         this.companyClient = companyClient;
@@ -38,7 +42,9 @@ public class JobServiceImpl implements JobService {
 
     private Long id = 1L;
     @Override
+    @Retry(name = "companyBreaker", fallbackMethod = "companyBreakerFallback")
     public List<JobDTO> findAll() {
+        System.out.println("attempt: " + ++attempt);
         List<Job> jobs = jobRepository.findAll();
         return jobs.stream().map(this::convertToDTO).collect(Collectors.toList());
     }
@@ -105,5 +111,11 @@ public class JobServiceImpl implements JobService {
         // List<Review> reviews = reviewClient.getReviews(job.getCompanyId());
         // jobDTO.setCompany(company);
         return JobMapper.mapToJobWithCompanyDTO(job, company, reviews);
+    }
+
+    public List<String> companyBreakerFallback(Exception e){
+        List<String> list = new ArrayList<>();
+        list.add("Dummy");
+        return list;
     }
 }

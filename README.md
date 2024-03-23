@@ -2,7 +2,7 @@ Database running on port(tcp)- 5432
 pgadmin url- localhost:8888
 Zipkin running on localhost:9411
 
-containers in use for this service
+containers in use for this service or compose yml file through command-   compose up -d   (docKer-compose.yml file)
 postgres, dpage/pgadmin4, openzipkin/zipkin 
 
 Now we have 3 microservices running independently.
