@@ -116,6 +116,22 @@ It has below some of main modules:
 3. Bulkhead
 4. Circuit breaker
 
+Rate Limiting- technique for limiting network traffic.
+Importance-
+1. Preventing abuse
+2. Resource allocation
+3. Cost management
+Use cases of rate limiting
+1. APIs
+2. Web scraping
+3. Logging attempts
+
+DDoS(Distributed denial of service) attacks
+Multiple systems flood bandwidth of a particular system and they try to take it down.
+
+We can implement Rate limiting feature through Resilience4J in springboot.(Rate limiter module)
+
+
 
 
 
