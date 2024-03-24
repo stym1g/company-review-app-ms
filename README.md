@@ -1,3 +1,12 @@
+Add maven to classpath-
+M2_HOME="/Users/satyam/Documents/development-tools/apache-maven-3.9.6"
+PATH="${M2_HOME}/bin:${PATH}"
+export PATH
+
+For mac M1
+run below command befor docker compose up
+export DOCKER_DEFAULT_PLATFORM=linux/amd64
+
 Database running on port(tcp)- 5432
 pgadmin url- localhost:8888
 Zipkin running on localhost:9411
@@ -169,11 +178,6 @@ maven commands
 mvn build - for cleaning previous build
 mvn package - for packaging
 mvn clean package
-
-Add maven to classpath-
-M2_HOME="/Users/satyam/Documents/development-tools/apache-maven-3.9.6"
-PATH="${M2_HOME}/bin:${PATH}"
-export PATH
 
 Springboot Profiles
 It provides a way to segregate the parts of your application configuration and make it available only in 
