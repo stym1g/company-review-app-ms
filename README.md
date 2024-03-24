@@ -175,6 +175,11 @@ M2_HOME="/Users/satyam/Documents/development-tools/apache-maven-3.9.6"
 PATH="${M2_HOME}/bin:${PATH}"
 export PATH
 
+Springboot Profiles
+It provides a way to segregate the parts of your application configuration and make it available only in 
+certain environments
+
+
 
 
 
