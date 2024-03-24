@@ -179,6 +179,20 @@ Springboot Profiles
 It provides a way to segregate the parts of your application configuration and make it available only in 
 certain environments
 
+maven commands for building docker images of different microservices(Go to perticular service directory and execute command as below)-
+mvn spring-boot:build-image "-Dspring-boot.build-image.imageName=satyamg650/servicereg"
+mvn spring-boot:build-image "-Dspring-boot.build-image.imageName=satyamg650/gateway-ms"
+mvn spring-boot:build-image "-Dspring-boot.build-image.imageName=satyamg650/config-server-ms"
+mvn spring-boot:build-image "-Dspring-boot.build-image.imageName=satyamg650/companyms"
+mvn spring-boot:build-image "-Dspring-boot.build-image.imageName=satyamg650/jobms"
+mvn spring-boot:build-image "-Dspring-boot.build-image.imageName=satyamg650/reviewms"
+Push to docker hub
+docker push satyamg650/servicereg
+docker push satyamg650/gateway-ms
+docker push satyamg650/config-server-ms
+docker push satyamg650/companyms
+docker push satyamg650/jobms
+docker push satyamg650/reviewms
 
 
 
