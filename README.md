@@ -198,6 +198,93 @@ docker push satyamg650/companyms
 docker push satyamg650/jobms
 docker push satyamg650/reviewms
 
+Kubernetes
+Google build a system called Borg for managing containers. Borg is now open source and now called k8s or kubernetes
+It is a platform designed completely manage the lifecycle of containerized applications using methods that provide 
+predictability, scalability and high availability.
+You can define how your application should run and the ways they should be able to interact with other applications 
+or outside the world.
+
+Benefits
+1. Service discovery and Load balancing
+2. Automated rollbacks and rollouts
+3. Horizontal scaling
+4. Self-Healing
+5. Secret and configuration management
+
+Install minikube(for mac m1)
+curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-darwin-arm64
+sudo install minikube-darwin-arm64 /usr/local/bin/minikube
+
+After installing minikube run command
+minikube start --driver=docker
+Now we can interact with minikube with kubectl
+kubectl cluster-info
+To interact with UI on browser(Dashboard)
+minikube dashboard
+
+Pods- basic building block in k8s. It groups one or more containers and their shared resources such as storage,
+IP address and network ports.
+Container within a POD run on the same worker node and share the same lifecycle.
+Pods are ephemeral, can be created, schedule and destroyed dynamically.
+
+Pods are not durable entity and it is not designed for horizontal scalability on their own.
+It is designed to be stateless. It can communicate with each other within the same cluster using localhost.
+Pods are assigned a unique IP address within the cluster.
+Lifecycle and availability of pods are managed by Kubernetes. Pods can have associated labels and annotations.
+Example of pod .yml file
+apiVersion: v1
+kind: Pod
+metadata:
+name: my-pod
+spec:
+containers:
+- name: nginx
+  image: nginx:1.14.2
+  ports:
+    - containerPort: 80
+- name: redis
+  image: redis:6.2.5
+
+To create POd with this yml file, run command 
+kubectl apply -f first-pod.yml
+
+Service- It is an abstraction that defines a logical set of pods and a policy by which to access them, sometime called
+a micro-service.
+
+To create a service through .yml file
+kubectl apply -f first-service.yml
+kubectl get service
+
+Exposing our application
+Types of services
+1. ClusterIP
+2. NodePort
+3. LoadBalancer
+
+ReplicaSet- a k8s object used for managing and scaling a set of identical pod replicas.
+
+Why need identical pods
+1. High Availability
+2. Load balancing
+3. Scaling
+4. Rolling Updates
+5. Service Discovery and Load Balancing
+
+ReplicaSet is not designed to handle rolling updates or deployments
+It does not provides declarative updates to the pods it manages.
+
+ReplicaSet use a selector to identify the pods it manages.
+You specify the desired no replicas
+If a pod managed by ReplicaSet fails or gets deleted, the ReplicaSet replaces it automatically to maintain
+the desired replica count.
+ReplicaSet are often used with the deployments.
+
+Deployment in k8s- It is a high level concept. It manages the replicaSet and provides update for pods and replicaSets.
+Deployment manages the lifecycle of pods.
+kubectl describe deployment deployment_name
+
+
 
 
 
