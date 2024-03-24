@@ -154,7 +154,26 @@ docker run -it --rm --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:3.13-ma
 url for rabbitmq management- localhost:15672
 Default username and password- guest, guest
 
+Microservices Packaging
+Packaging is compiling source code into bytecode, bundling it with any dependant libraries and creating a single, executable artifact
+that can be easily distributed and run.
+Packkage-> Bytecode + dependant libraries + configuration
+JAR-> jar archived is a file format that is used to bundle the components of the java application together.
+Benifits
+1. Simplifies deployments
+2. Inclusion of everything the java application needs
+3. JRE executes JAR files
+WAR, EAR and Docker images are other packaging options available for java application.
+POM(project object model)
+maven commands
+mvn build - for cleaning previous build
+mvn package - for packaging
+mvn clean package
 
+Add maven to classpath-
+M2_HOME="/Users/satyam/Documents/development-tools/apache-maven-3.9.6"
+PATH="${M2_HOME}/bin:${PATH}"
+export PATH
 
 
 
