@@ -1,5 +1,6 @@
 package com.satyam.reviewms;
 
+import com.satyam.reviewms.messaging.ReviewMessageProducer;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,9 +11,11 @@ import java.util.List;
 @RequestMapping("/reviews")
 public class ReviewController {
     private final ReviewService reviewService;
+    private final ReviewMessageProducer reviewMessageProducer;
 
-    public ReviewController(ReviewService reviewService) {
+    public ReviewController(ReviewService reviewService, ReviewMessageProducer reviewMessageProducer) {
         this.reviewService = reviewService;
+        this.reviewMessageProducer = reviewMessageProducer;
     }
     @GetMapping
     public ResponseEntity<List<Review>> getAllReviews(@RequestParam Long companyId){
@@ -32,6 +35,7 @@ public class ReviewController {
     public ResponseEntity<String> addReview(@RequestParam Long companyId, @RequestBody Review review){
         Boolean isReviewSaved = reviewService.addReview(companyId, review);
         if(isReviewSaved){
+            reviewMessageProducer.sendMessage(review);
             return new ResponseEntity<>("Review Added Successfully", HttpStatus.CREATED);
         }
         return new ResponseEntity<>("Company does not exists", HttpStatus.BAD_REQUEST);
@@ -53,5 +57,11 @@ public class ReviewController {
             return new ResponseEntity<>("Review does not exists", HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>("Review deleted Successfully", HttpStatus.OK);
+    }
+
+    @GetMapping("/averageRating")
+    public Double getAverageReview(@RequestParam Long companyId){
+        List<Review> reviewList = reviewService.getAllReviews(companyId);
+        return reviewList.stream().mapToDouble(Review::getRating).average().orElse(0.0);
     }
 }

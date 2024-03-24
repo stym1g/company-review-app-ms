@@ -7,8 +7,7 @@ public class Company {
     private Long id;
     private String name;
     private String description;
-
-
+    private Double averageRating;
     public void setId(Long id) {
         this.id = id;
     }
@@ -34,6 +33,14 @@ public class Company {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Double getAverageRating() {
+        return averageRating;
+    }
+
+    public void setAverageRating(Double averageRating) {
+        this.averageRating = averageRating;
     }
 
 }

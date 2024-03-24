@@ -2,8 +2,10 @@ Database running on port(tcp)- 5432
 pgadmin url- localhost:8888
 Zipkin running on localhost:9411
 
-containers in use for this service or compose yml file through command-   compose up -d   (docKer-compose.yml file)
-postgres, dpage/pgadmin4, openzipkin/zipkin 
+containers in use for this service or compose yml file through command- docker compose up -d   (docKer-compose.yml file)
+postgres, dpage/pgadmin4, openzipkin/zipkin, rabbitmq
+Check running images- docker ps
+Stop a container forcefully- docker kill f34f68df66bf
 
 Now we have 3 microservices running independently.
 We there is a need to communicate these services to each other.
@@ -130,6 +132,27 @@ DDoS(Distributed denial of service) attacks
 Multiple systems flood bandwidth of a particular system and they try to take it down.
 
 We can implement Rate limiting feature through Resilience4J in springboot.(Rate limiter module)
+
+
+Message Queues- form of asynchronous service-to-service communication used in serverless and microservices architectures.
+Need of Message Queues
+Decoupling
+Asynchronous communication
+Scalability
+Fault Tolerant
+Event-Driven Architecture
+Time Decoupling
+
+Producer- create messages and adds to message queue
+Consumer- process messages produced by producer
+Ex.- RabbitMQ, Apache Kafka, AWS SQS
+
+To use RabbitMQ through docker
+run below command or add command in docker-composed file
+# latest RabbitMQ 3.13
+docker run -it --rm --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:3.13-management
+url for rabbitmq management- localhost:15672
+Default username and password- guest, guest
 
 
 

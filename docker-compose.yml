@@ -1,4 +1,7 @@
 version: "3.8"
+networks:
+  company-review-app-ms_default:
+    external: true
 services:
   db:
     image: postgres
@@ -28,7 +31,15 @@ services:
     ports:
       - 9411:9411
     networks:
-      - postgres
+      - company-review-app-ms_default
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    ports:
+      - 5672:5672
+      - 15672:15672
+    networks:
+      - company-review-app-ms_default
 
 volumes:
   local_pgdata:
